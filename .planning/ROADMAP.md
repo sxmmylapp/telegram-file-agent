@@ -76,5 +76,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
 | 2. Core Summarization Pipeline | 0/? | Complete    | 2026-02-20 |
-| 3. PDF Output & Delivery | 0/2 | Planned | - |
+| 3. PDF Output & Delivery | 1/2 | In Progress | - |
 | 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |

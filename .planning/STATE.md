@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** The agent finds, reads, and summarizes your scattered real estate documents on demand -- so you never have to dig through folders or manually compile summaries.
-**Current focus:** Phase 2: Core Summarization Pipeline
+**Current focus:** Phase 3: PDF Output & Delivery
 
 ## Current Position
 
-Phase: 2 of 4 (Core Summarization Pipeline)
-Plan: 2 of 2 in current phase
-Status: Phase Complete
-Last activity: 2026-02-20 -- Completed 02-02 document handler pipeline
+Phase: 3 of 4 (PDF Output & Delivery)
+Plan: 1 of 2 in current phase
+Status: In Progress
+Last activity: 2026-02-20 -- Completed 03-01 PDF generation service
 
-Progress: [#####.....] 50%
+Progress: [######....] 60%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 4
+- Total plans completed: 5
 - Average duration: 2 min
-- Total execution time: 0.15 hours
+- Total execution time: 0.18 hours
 
 **By Phase:**
 
@@ -29,9 +29,10 @@ Progress: [#####.....] 50%
 |-------|-------|-------|----------|
 | 01-bot-foundation | 2 | 5 min | 2.5 min |
 | 02-summarization-pipeline | 2 | 3 min | 1.5 min |
+| 03-pdf-output-delivery | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (2 min), 02-01 (2 min), 02-02 (1 min)
+- Last 5 plans: 01-02 (2 min), 02-01 (2 min), 02-02 (1 min), 03-01 (2 min)
 - Trend: Stable/Improving
 
 *Updated after each plan completion*
@@ -58,6 +59,9 @@ Recent decisions affecting current work:
 - Service layer pattern: API logic in src/services/, handlers stay thin
 - Telegram photos always use image/jpeg media type (Telegram compresses all uploads to JPEG)
 - Thin handler pattern: handlers build content blocks and delegate to services
+- Helvetica built-in fonts only for PDF generation (no external font files)
+- Buffer-based PDF generation (no filesystem writes)
+- Regex-based inline formatting parser for bold/italic font switching in PDFs
 
 ### Pending Todos
 
@@ -71,5 +75,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 02-02-PLAN.md (document handler pipeline) -- Phase 02 complete
+Stopped at: Completed 03-01-PLAN.md (PDF generation service)
 Resume file: None
