@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 4 of 4 (Extended Formats & Domain Intelligence)
-Plan: 1 of 2 in current phase -- COMPLETE
-Status: Executing
-Last activity: 2026-02-20 -- Completed 04-01 text extraction and domain intelligence
+Plan: 2 of 2 in current phase -- COMPLETE
+Status: Phase Complete
+Last activity: 2026-02-20 -- Completed 04-02 document handler wiring for DOCX/XLSX/CSV
 
-Progress: [########.#] 87%
+Progress: [##########] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 2 min
-- Total execution time: 0.24 hours
+- Total execution time: 0.27 hours
 
 **By Phase:**
 
@@ -30,11 +30,11 @@ Progress: [########.#] 87%
 | 01-bot-foundation | 2 | 5 min | 2.5 min |
 | 02-summarization-pipeline | 2 | 3 min | 1.5 min |
 | 03-pdf-output-delivery | 2 | 4 min | 2 min |
-| 04-extended-formats-domain-intelligence | 1 | 2 min | 2 min |
+| 04-extended-formats-domain-intelligence | 2 | 4 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-02 (1 min), 03-01 (2 min), 03-02 (2 min), 04-01 (2 min)
-- Trend: Stable/Improving
+- Last 5 plans: 03-01 (2 min), 03-02 (2 min), 04-01 (2 min), 04-02 (2 min)
+- Trend: Stable
 
 *Updated after each plan completion*
 
@@ -70,6 +70,9 @@ Recent decisions affecting current work:
 - SheetJS from CDN URL to avoid CVE-2023-30533 in npm registry
 - 100KB warning threshold for extracted spreadsheet text (token cost flag)
 - Real Estate Data section in Claude prompt for structured property/transaction/contingency extraction
+- CSV detection uses MIME type set + .csv extension fallback for Telegram MIME inconsistency
+- base64 encoding scoped to PDF/image branches only; text extraction branches skip encoding
+- Format-specific content block construction: each format builds own blocks, shared pipeline handles summarization
 
 ### Pending Todos
 
@@ -83,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 04-01-PLAN.md (text extraction and domain intelligence)
+Stopped at: Completed 04-02-PLAN.md (document handler wiring for DOCX/XLSX/CSV) -- Phase 04 complete
 Resume file: None
