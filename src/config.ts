@@ -1,0 +1,33 @@
+import "dotenv/config";
+
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+
+function parseAuthorizedUserIds(raw: string): number[] {
+  const ids = raw
+    .split(",")
+    .map((s) => parseInt(s.trim(), 10))
+    .filter((id) => !isNaN(id));
+
+  if (ids.length === 0) {
+    throw new Error(
+      "AUTHORIZED_USER_IDS must contain at least one valid numeric Telegram user ID"
+    );
+  }
+
+  return ids;
+}
+
+export const config = {
+  BOT_TOKEN: requireEnv("BOT_TOKEN"),
+  AUTHORIZED_USER_IDS: parseAuthorizedUserIds(
+    requireEnv("AUTHORIZED_USER_IDS")
+  ),
+  NODE_ENV: process.env.NODE_ENV || "development",
+  LOG_LEVEL: process.env.LOG_LEVEL || "info",
+} as const;
