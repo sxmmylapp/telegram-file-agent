@@ -65,7 +65,10 @@ Plans:
   1. User sends a Word document (.docx) and receives a summary
   2. User sends a spreadsheet (.xlsx or .csv) and receives a summary
   3. All summaries extract and highlight real estate-specific data: key dates, prices, parties involved, contingencies, and property details
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 04-01-PLAN.md — Install mammoth/SheetJS, create text extraction service, enhance Claude system prompt
+- [ ] 04-02-PLAN.md — Wire new formats into document handler with MIME routing
 
 ## Progress
 
@@ -77,4 +80,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
 | 2. Core Summarization Pipeline | 0/? | Complete    | 2026-02-20 |
 | 3. PDF Output & Delivery | 2/2 | Complete | 2026-02-20 |
-| 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |
+| 4. Extended Formats & Domain Intelligence | 0/2 | Planned | - |
