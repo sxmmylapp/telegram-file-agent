@@ -1,7 +1,7 @@
 # Requirements: Telegram File Agent
 
 **Defined:** 2026-02-19
-**Core Value:** The agent finds, reads, and summarizes your scattered real estate documents on demand — so you never have to dig through folders or manually compile summaries.
+**Core Value:** The agent finds, reads, and summarizes your scattered real estate documents on demand -- so you never have to dig through folders or manually compile summaries.
 
 ## v1 Requirements
 
@@ -84,29 +84,29 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BOT-01 | — | Pending |
-| BOT-02 | — | Pending |
-| BOT-03 | — | Pending |
-| BOT-04 | — | Pending |
-| INP-01 | — | Pending |
-| INP-02 | — | Pending |
-| INP-03 | — | Pending |
-| PROC-01 | — | Pending |
-| PROC-02 | — | Pending |
-| PROC-03 | — | Pending |
-| PROC-04 | — | Pending |
-| SUMM-01 | — | Pending |
-| SUMM-02 | — | Pending |
-| SUMM-03 | — | Pending |
-| SUMM-04 | — | Pending |
-| OUT-01 | — | Pending |
-| OUT-02 | — | Pending |
+| BOT-01 | Phase 1 | Pending |
+| BOT-02 | Phase 1 | Pending |
+| BOT-03 | Phase 1 | Pending |
+| BOT-04 | Phase 1 | Pending |
+| INP-01 | Phase 1 | Pending |
+| INP-02 | Phase 1 | Pending |
+| INP-03 | Phase 1 | Pending |
+| PROC-01 | Phase 2 | Pending |
+| PROC-02 | Phase 2 | Pending |
+| PROC-03 | Phase 4 | Pending |
+| PROC-04 | Phase 4 | Pending |
+| SUMM-01 | Phase 2 | Pending |
+| SUMM-02 | Phase 2 | Pending |
+| SUMM-03 | Phase 4 | Pending |
+| SUMM-04 | Phase 2 | Pending |
+| OUT-01 | Phase 3 | Pending |
+| OUT-02 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0
-- Unmapped: 17
+- Mapped to phases: 17
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-19*
-*Last updated: 2026-02-19 after initial definition*
+*Last updated: 2026-02-19 after roadmap creation*
