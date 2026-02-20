@@ -1,8 +1,9 @@
-import { Composer } from "grammy";
+import { Composer, InputFile } from "grammy";
 import type { BotContext } from "../types.js";
 import { downloadFileAsBuffer } from "../services/file-download.js";
 import { estimateTokens, summarizeDocument } from "../services/claude.js";
 import { splitMessage } from "../services/message-splitter.js";
+import { generateSummaryPdf } from "../services/pdf-generator.js";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
@@ -101,7 +102,27 @@ documentHandlers.on("message:document", async (ctx) => {
       await ctx.reply(chunk);
     }
 
-    ctx.logger?.info({ fileName, chunks: chunks.length }, "Document summarized successfully");
+    // Generate and send PDF attachment
+    let pdfSent = false;
+    try {
+      const pdfBuffer = await generateSummaryPdf(summary, {
+        sourceFileName: fileName,
+        generatedAt: new Date(),
+      }, ctx.logger);
+
+      const pdfFileName = `summary-${fileName.replace(/\.[^.]+$/, "")}.pdf`;
+      await ctx.replyWithDocument(
+        new InputFile(pdfBuffer, pdfFileName),
+        { caption: `Executive summary of "${fileName}"` }
+      );
+      pdfSent = true;
+      ctx.logger?.info({ fileName, pdfSize: pdfBuffer.length }, "PDF sent successfully");
+    } catch (pdfError) {
+      ctx.logger?.error({ error: pdfError, fileName }, "PDF generation failed, text summary already sent");
+      await ctx.reply("(PDF generation failed — text summary above is your summary)").catch(() => {});
+    }
+
+    ctx.logger?.info({ fileName, chunks: chunks.length, pdfSent }, "Document summarized successfully");
   } catch (error) {
     ctx.logger?.error({ error, fileName }, "Failed to process document");
     await ctx
@@ -156,7 +177,29 @@ documentHandlers.on("message:photo", async (ctx) => {
       await ctx.reply(chunk);
     }
 
-    ctx.logger?.info({ width, height, chunks: chunks.length }, "Photo summarized successfully");
+    // Generate and send PDF attachment
+    let pdfSent = false;
+    try {
+      const pdfFileName = `summary-photo-${Date.now()}.pdf`;
+      const sourceLabel = `Photo (${width}x${height})`;
+
+      const pdfBuffer = await generateSummaryPdf(summary, {
+        sourceFileName: sourceLabel,
+        generatedAt: new Date(),
+      }, ctx.logger);
+
+      await ctx.replyWithDocument(
+        new InputFile(pdfBuffer, pdfFileName),
+        { caption: `Executive summary of photo (${width}x${height})` }
+      );
+      pdfSent = true;
+      ctx.logger?.info({ width, height, pdfSize: pdfBuffer.length }, "PDF sent successfully");
+    } catch (pdfError) {
+      ctx.logger?.error({ error: pdfError, width, height }, "PDF generation failed, text summary already sent");
+      await ctx.reply("(PDF generation failed — text summary above is your summary)").catch(() => {});
+    }
+
+    ctx.logger?.info({ width, height, chunks: chunks.length, pdfSent }, "Photo summarized successfully");
   } catch (error) {
     ctx.logger?.error({ error, width, height }, "Failed to process image");
     await ctx
