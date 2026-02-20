@@ -52,7 +52,10 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. After summarization, bot generates a professional-looking PDF with the executive summary content
   2. Bot sends the generated PDF file back to the user in the Telegram chat as a document attachment
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 03-01-PLAN.md — PDF generation service with PDFKit (markdown-to-PDF renderer)
+- [ ] 03-02-PLAN.md — Wire PDF generation into document handlers, send via Telegram
 
 ### Phase 4: Extended Formats & Domain Intelligence
 **Goal**: User can summarize Word docs and spreadsheets, and all summaries extract real estate-specific data
@@ -73,5 +76,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
 | 2. Core Summarization Pipeline | 0/? | Complete    | 2026-02-20 |
-| 3. PDF Output & Delivery | 0/? | Not started | - |
+| 3. PDF Output & Delivery | 0/2 | Planned | - |
 | 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |
