@@ -10,29 +10,29 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 ## Current Position
 
 Phase: 2 of 4 (Core Summarization Pipeline)
-Plan: 1 of 2 in current phase
-Status: Executing
-Last activity: 2026-02-20 -- Completed 02-01 service layer
+Plan: 2 of 2 in current phase
+Status: Phase Complete
+Last activity: 2026-02-20 -- Completed 02-02 document handler pipeline
 
-Progress: [###.......] 30%
+Progress: [#####.....] 50%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 2.3 min
-- Total execution time: 0.12 hours
+- Total plans completed: 4
+- Average duration: 2 min
+- Total execution time: 0.15 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-bot-foundation | 2 | 5 min | 2.5 min |
-| 02-summarization-pipeline | 1 | 2 min | 2 min |
+| 02-summarization-pipeline | 2 | 3 min | 1.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (2 min), 02-01 (2 min)
-- Trend: Stable
+- Last 5 plans: 01-01 (3 min), 01-02 (2 min), 02-01 (2 min), 02-02 (1 min)
+- Trend: Stable/Improving
 
 *Updated after each plan completion*
 
@@ -56,6 +56,8 @@ Recent decisions affecting current work:
 - Singleton Anthropic client initialized at module level for connection reuse
 - Cost estimation uses worst-case MAX_OUTPUT_TOKENS for output cost calculation
 - Service layer pattern: API logic in src/services/, handlers stay thin
+- Telegram photos always use image/jpeg media type (Telegram compresses all uploads to JPEG)
+- Thin handler pattern: handlers build content blocks and delegate to services
 
 ### Pending Todos
 
@@ -69,5 +71,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 02-01-PLAN.md (service layer)
+Stopped at: Completed 02-02-PLAN.md (document handler pipeline) -- Phase 02 complete
 Resume file: None
