@@ -24,14 +24,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **PROC-01**: Bot parses PDF documents via Claude's native PDF support (up to 32MB, 100 pages)
 - [ ] **PROC-02**: Bot reads scanned documents and images via Claude Vision (no separate OCR needed)
-- [ ] **PROC-03**: Bot parses Word documents (.docx) via mammoth
-- [ ] **PROC-04**: Bot parses spreadsheets (.xlsx/.csv) via SheetJS
+- [x] **PROC-03**: Bot parses Word documents (.docx) via mammoth
+- [x] **PROC-04**: Bot parses spreadsheets (.xlsx/.csv) via SheetJS
 
 ### Summarization
 
 - [ ] **SUMM-01**: Bot summarizes document content using Claude API
 - [ ] **SUMM-02**: Summary follows executive summary format (1-2 pages: key details, highlights, concerns)
-- [ ] **SUMM-03**: Summary extracts real estate-specific data (dates, prices, parties, contingencies, property details)
+- [x] **SUMM-03**: Summary extracts real estate-specific data (dates, prices, parties, contingencies, property details)
 - [ ] **SUMM-04**: Bot estimates token count and logs cost before each API call
 
 ### Output & Delivery
@@ -93,11 +93,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INP-03 | Phase 1 | Pending |
 | PROC-01 | Phase 2 | Pending |
 | PROC-02 | Phase 2 | Pending |
-| PROC-03 | Phase 4 | Pending |
-| PROC-04 | Phase 4 | Pending |
+| PROC-03 | Phase 4 | Complete |
+| PROC-04 | Phase 4 | Complete |
 | SUMM-01 | Phase 2 | Pending |
 | SUMM-02 | Phase 2 | Pending |
-| SUMM-03 | Phase 4 | Pending |
+| SUMM-03 | Phase 4 | Complete |
 | SUMM-04 | Phase 2 | Pending |
 | OUT-01 | Phase 3 | Pending |
 | OUT-02 | Phase 3 | Complete |

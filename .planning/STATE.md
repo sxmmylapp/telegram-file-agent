@@ -5,23 +5,23 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** The agent finds, reads, and summarizes your scattered real estate documents on demand -- so you never have to dig through folders or manually compile summaries.
-**Current focus:** Phase 3: PDF Output & Delivery
+**Current focus:** Phase 4: Extended Formats & Domain Intelligence
 
 ## Current Position
 
-Phase: 3 of 4 (PDF Output & Delivery) -- COMPLETE
-Plan: 2 of 2 in current phase -- COMPLETE
-Status: Phase Complete
-Last activity: 2026-02-20 -- Completed 03-02 PDF delivery integration
+Phase: 4 of 4 (Extended Formats & Domain Intelligence)
+Plan: 1 of 2 in current phase -- COMPLETE
+Status: Executing
+Last activity: 2026-02-20 -- Completed 04-01 text extraction and domain intelligence
 
-Progress: [########..] 75%
+Progress: [########.#] 87%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 2 min
-- Total execution time: 0.21 hours
+- Total execution time: 0.24 hours
 
 **By Phase:**
 
@@ -30,9 +30,10 @@ Progress: [########..] 75%
 | 01-bot-foundation | 2 | 5 min | 2.5 min |
 | 02-summarization-pipeline | 2 | 3 min | 1.5 min |
 | 03-pdf-output-delivery | 2 | 4 min | 2 min |
+| 04-extended-formats-domain-intelligence | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 02-01 (2 min), 02-02 (1 min), 03-01 (2 min), 03-02 (2 min)
+- Last 5 plans: 02-02 (1 min), 03-01 (2 min), 03-02 (2 min), 04-01 (2 min)
 - Trend: Stable/Improving
 
 *Updated after each plan completion*
@@ -65,6 +66,10 @@ Recent decisions affecting current work:
 - PDF generation after text summary for immediate user feedback; nested try/catch isolates PDF failures
 - Photo PDFs use timestamp filenames; document PDFs use source filename
 - Optional feature delivery pattern: core content first, bonus output with isolated error handling
+- mammoth convertToHtml preserves table structure (not extractRawText) -- critical for real estate docs
+- SheetJS from CDN URL to avoid CVE-2023-30533 in npm registry
+- 100KB warning threshold for extracted spreadsheet text (token cost flag)
+- Real Estate Data section in Claude prompt for structured property/transaction/contingency extraction
 
 ### Pending Todos
 
@@ -78,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 03-02-PLAN.md (PDF delivery integration) -- Phase 3 complete
+Stopped at: Completed 04-01-PLAN.md (text extraction and domain intelligence)
 Resume file: None
