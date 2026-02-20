@@ -1,5 +1,8 @@
 import { Composer } from "grammy";
 import type { BotContext } from "../types.js";
+import { downloadFileAsBuffer } from "../services/file-download.js";
+import { estimateTokens, summarizeDocument } from "../services/claude.js";
+import { splitMessage } from "../services/message-splitter.js";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 
@@ -43,18 +46,68 @@ documentHandlers.on("message:document", async (ctx) => {
     return;
   }
 
-  await ctx.reply(
-    `Received document:\n` +
-      `- Name: ${fileName}\n` +
-      `- Size: ${formatBytes(fileSize)}\n` +
-      `- Type: ${mimeType}\n\n` +
-      `Ready to process this file?`
-  );
+  const isPdf = mimeType === "application/pdf";
+  const isImage = mimeType?.startsWith("image/");
 
-  ctx.logger?.debug(
-    { fileName, fileSize, mimeType, fileId: doc.file_id },
-    "Document metadata"
-  );
+  if (!isPdf && !isImage) {
+    await ctx.reply(
+      "I can currently summarize PDF documents and images. Please send a supported file type."
+    );
+    return;
+  }
+
+  try {
+    await ctx.reply(`Processing "${fileName}"...`);
+    await ctx.replyWithChatAction("typing");
+
+    const buffer = await downloadFileAsBuffer(ctx);
+    const base64Data = buffer.toString("base64");
+
+    const contentBlocks = isPdf
+      ? [
+          {
+            type: "document" as const,
+            source: {
+              type: "base64" as const,
+              media_type: "application/pdf" as const,
+              data: base64Data,
+            },
+          },
+          {
+            type: "text" as const,
+            text: "Please provide an executive summary of this document.",
+          },
+        ]
+      : [
+          {
+            type: "image" as const,
+            source: {
+              type: "base64" as const,
+              media_type: mimeType as "image/jpeg",
+              data: base64Data,
+            },
+          },
+          {
+            type: "text" as const,
+            text: "This is a scanned document or image. Please extract all visible text and provide an executive summary.",
+          },
+        ];
+
+    await estimateTokens(contentBlocks, ctx.logger);
+    const summary = await summarizeDocument(contentBlocks, ctx.logger);
+    const chunks = splitMessage(summary);
+
+    for (const chunk of chunks) {
+      await ctx.reply(chunk);
+    }
+
+    ctx.logger?.info({ fileName, chunks: chunks.length }, "Document summarized successfully");
+  } catch (error) {
+    ctx.logger?.error({ error, fileName }, "Failed to process document");
+    await ctx
+      .reply("Sorry, I couldn't process that document. Please try again.")
+      .catch(() => {});
+  }
 });
 
 documentHandlers.on("message:photo", async (ctx) => {
@@ -73,11 +126,41 @@ documentHandlers.on("message:photo", async (ctx) => {
     return;
   }
 
-  await ctx.reply(
-    `Received photo:\n` +
-      `- Size: ${formatBytes(fileSize)}\n` +
-      `- Dimensions: ${width}x${height}\n` +
-      `- Type: JPEG (Telegram-compressed)\n\n` +
-      `Ready to process this image?`
-  );
+  try {
+    await ctx.reply("Processing your image...");
+    await ctx.replyWithChatAction("typing");
+
+    const buffer = await downloadFileAsBuffer(ctx);
+    const base64Data = buffer.toString("base64");
+
+    const contentBlocks = [
+      {
+        type: "image" as const,
+        source: {
+          type: "base64" as const,
+          media_type: "image/jpeg" as const,
+          data: base64Data,
+        },
+      },
+      {
+        type: "text" as const,
+        text: "This is a scanned document or image. Please extract all visible text and provide an executive summary.",
+      },
+    ];
+
+    await estimateTokens(contentBlocks, ctx.logger);
+    const summary = await summarizeDocument(contentBlocks, ctx.logger);
+    const chunks = splitMessage(summary);
+
+    for (const chunk of chunks) {
+      await ctx.reply(chunk);
+    }
+
+    ctx.logger?.info({ width, height, chunks: chunks.length }, "Photo summarized successfully");
+  } catch (error) {
+    ctx.logger?.error({ error, width, height }, "Failed to process image");
+    await ctx
+      .reply("Sorry, I couldn't process that image. Please try again.")
+      .catch(() => {});
+  }
 });
