@@ -5,33 +5,34 @@
 See: .planning/PROJECT.md (updated 2026-02-19)
 
 **Core value:** The agent finds, reads, and summarizes your scattered real estate documents on demand -- so you never have to dig through folders or manually compile summaries.
-**Current focus:** Phase 1: Bot Foundation & Document Reception
+**Current focus:** Phase 2: Core Summarization Pipeline
 
 ## Current Position
 
-Phase: 1 of 4 (Bot Foundation & Document Reception) -- COMPLETE
-Plan: 2 of 2 in current phase (all plans complete)
-Status: Phase Complete
-Last activity: 2026-02-20 -- Completed 01-02 bot implementation
+Phase: 2 of 4 (Core Summarization Pipeline)
+Plan: 1 of 2 in current phase
+Status: Executing
+Last activity: 2026-02-20 -- Completed 02-01 service layer
 
-Progress: [##........] 20%
+Progress: [###.......] 30%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 2
-- Average duration: 2.5 min
-- Total execution time: 0.08 hours
+- Total plans completed: 3
+- Average duration: 2.3 min
+- Total execution time: 0.12 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01-bot-foundation | 2 | 5 min | 2.5 min |
+| 02-summarization-pipeline | 1 | 2 min | 2 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min), 01-02 (2 min)
-- Trend: Accelerating
+- Last 5 plans: 01-01 (3 min), 01-02 (2 min), 02-01 (2 min)
+- Trend: Stable
 
 *Updated after each plan completion*
 
@@ -52,6 +53,9 @@ Recent decisions affecting current work:
 - Middleware order: logging -> auth -> commands -> documents (logging first to capture all updates)
 - GrammyError/HttpError discrimination in bot.catch for targeted error logging
 - User-friendly error replies wrapped in .catch(() => {}) to prevent double-error cascades
+- Singleton Anthropic client initialized at module level for connection reuse
+- Cost estimation uses worst-case MAX_OUTPUT_TOKENS for output cost calculation
+- Service layer pattern: API logic in src/services/, handlers stay thin
 
 ### Pending Todos
 
@@ -65,5 +69,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 01-02-PLAN.md (bot implementation) -- Phase 01 complete
+Stopped at: Completed 02-01-PLAN.md (service layer)
 Resume file: None
