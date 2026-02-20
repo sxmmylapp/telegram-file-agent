@@ -29,7 +29,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can send a PDF or image file to the bot and the bot acknowledges receipt with file details (name, size, type)
   4. Bot warns the user when a file exceeds Telegram's 20MB download limit before attempting to process it
   5. All bot operations produce structured logs (timestamps, function names, request IDs) and errors show user-friendly messages while logging full stack traces
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Project scaffolding, dependencies, config, logger, and types
+- [ ] 01-02-PLAN.md — Auth middleware, command handlers, document handlers, bot wiring
 
 ### Phase 2: Core Summarization Pipeline
 **Goal**: User can send a PDF or image to the bot and receive a plain-text executive summary back in the chat
@@ -68,7 +71,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Bot Foundation & Document Reception | 0/? | Not started | - |
+| 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
 | 2. Core Summarization Pipeline | 0/? | Not started | - |
 | 3. PDF Output & Delivery | 0/? | Not started | - |
 | 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |
