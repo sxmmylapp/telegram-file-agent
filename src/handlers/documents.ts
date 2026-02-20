@@ -4,8 +4,13 @@ import { downloadFileAsBuffer } from "../services/file-download.js";
 import { estimateTokens, summarizeDocument } from "../services/claude.js";
 import { splitMessage } from "../services/message-splitter.js";
 import { generateSummaryPdf } from "../services/pdf-generator.js";
+import { extractDocxText, extractSpreadsheetText } from "../services/text-extractor.js";
 
 const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+
+const DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+const CSV_MIME_TYPES = new Set(["text/csv", "text/comma-separated-values", "application/csv", "application/vnd.ms-excel"]);
 
 function formatBytes(bytes: number): string {
   if (bytes === 0) return "unknown size";
@@ -49,10 +54,13 @@ documentHandlers.on("message:document", async (ctx) => {
 
   const isPdf = mimeType === "application/pdf";
   const isImage = mimeType?.startsWith("image/");
+  const isDocx = mimeType === DOCX_MIME;
+  const isXlsx = mimeType === XLSX_MIME;
+  const isCsv = CSV_MIME_TYPES.has(mimeType) || fileName.toLowerCase().endsWith(".csv");
 
-  if (!isPdf && !isImage) {
+  if (!isPdf && !isImage && !isDocx && !isXlsx && !isCsv) {
     await ctx.reply(
-      "I can currently summarize PDF documents and images. Please send a supported file type."
+      "I can summarize PDF documents, images, Word documents (.docx), and spreadsheets (.xlsx, .csv). Please send a supported file type."
     );
     return;
   }
@@ -62,37 +70,55 @@ documentHandlers.on("message:document", async (ctx) => {
     await ctx.replyWithChatAction("typing");
 
     const buffer = await downloadFileAsBuffer(ctx);
-    const base64Data = buffer.toString("base64");
 
-    const contentBlocks = isPdf
-      ? [
-          {
-            type: "document" as const,
-            source: {
-              type: "base64" as const,
-              media_type: "application/pdf" as const,
-              data: base64Data,
-            },
+    let contentBlocks: Parameters<typeof summarizeDocument>[0];
+
+    if (isPdf) {
+      const base64Data = buffer.toString("base64");
+      contentBlocks = [
+        {
+          type: "document" as const,
+          source: {
+            type: "base64" as const,
+            media_type: "application/pdf" as const,
+            data: base64Data,
           },
-          {
-            type: "text" as const,
-            text: "Please provide an executive summary of this document.",
+        },
+        {
+          type: "text" as const,
+          text: "Please provide an executive summary of this document.",
+        },
+      ];
+    } else if (isImage) {
+      const base64Data = buffer.toString("base64");
+      contentBlocks = [
+        {
+          type: "image" as const,
+          source: {
+            type: "base64" as const,
+            media_type: mimeType as "image/jpeg",
+            data: base64Data,
           },
-        ]
-      : [
-          {
-            type: "image" as const,
-            source: {
-              type: "base64" as const,
-              media_type: mimeType as "image/jpeg",
-              data: base64Data,
-            },
-          },
-          {
-            type: "text" as const,
-            text: "This is a scanned document or image. Please extract all visible text and provide an executive summary.",
-          },
-        ];
+        },
+        {
+          type: "text" as const,
+          text: "This is a scanned document or image. Please extract all visible text and provide an executive summary.",
+        },
+      ];
+    } else if (isDocx) {
+      const extractedText = await extractDocxText(buffer, ctx.logger);
+      contentBlocks = [
+        { type: "text" as const, text: `The following is the content of a Word document titled "${fileName}":\n\n${extractedText}` },
+        { type: "text" as const, text: "Please provide an executive summary of this document." },
+      ];
+    } else {
+      // isXlsx || isCsv
+      const extractedText = await extractSpreadsheetText(buffer, fileName, ctx.logger);
+      contentBlocks = [
+        { type: "text" as const, text: `The following is spreadsheet data from "${fileName}":\n\n${extractedText}` },
+        { type: "text" as const, text: "Please provide an executive summary of this spreadsheet data." },
+      ];
+    }
 
     await estimateTokens(contentBlocks, ctx.logger);
     const summary = await summarizeDocument(contentBlocks, ctx.logger);
