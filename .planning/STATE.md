@@ -9,29 +9,29 @@ See: .planning/PROJECT.md (updated 2026-02-19)
 
 ## Current Position
 
-Phase: 1 of 4 (Bot Foundation & Document Reception)
-Plan: 1 of 2 in current phase
-Status: Executing
-Last activity: 2026-02-20 -- Completed 01-01 project scaffold
+Phase: 1 of 4 (Bot Foundation & Document Reception) -- COMPLETE
+Plan: 2 of 2 in current phase (all plans complete)
+Status: Phase Complete
+Last activity: 2026-02-20 -- Completed 01-02 bot implementation
 
-Progress: [#.........] 10%
+Progress: [##........] 20%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 3 min
-- Total execution time: 0.05 hours
+- Total plans completed: 2
+- Average duration: 2.5 min
+- Total execution time: 0.08 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-bot-foundation | 1 | 3 min | 3 min |
+| 01-bot-foundation | 2 | 5 min | 2.5 min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3 min)
-- Trend: Starting
+- Last 5 plans: 01-01 (3 min), 01-02 (2 min)
+- Trend: Accelerating
 
 *Updated after each plan completion*
 
@@ -49,6 +49,9 @@ Recent decisions affecting current work:
 - AUTHORIZED_USER_IDS as comma-separated numbers supporting multiple users
 - Pino with pino-pretty in dev, raw JSON in production
 - esbuild bundles everything (no externals) for clean Railway deploys
+- Middleware order: logging -> auth -> commands -> documents (logging first to capture all updates)
+- GrammyError/HttpError discrimination in bot.catch for targeted error logging
+- User-friendly error replies wrapped in .catch(() => {}) to prevent double-error cascades
 
 ### Pending Todos
 
@@ -62,5 +65,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-20
-Stopped at: Completed 01-01-PLAN.md (project scaffold)
+Stopped at: Completed 01-02-PLAN.md (bot implementation) -- Phase 01 complete
 Resume file: None
