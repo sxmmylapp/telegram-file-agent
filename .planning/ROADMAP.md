@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Bot Foundation & Document Reception** - Working Telegram bot that receives documents, validates them, and confirms receipt
 - [x] **Phase 2: Core Summarization Pipeline** - PDF and image documents summarized via Claude with cost tracking (completed 2026-02-20)
-- [ ] **Phase 3: PDF Output & Delivery** - Professional executive summary PDFs generated and sent via Telegram
+- [x] **Phase 3: PDF Output & Delivery** - Professional executive summary PDFs generated and sent via Telegram (completed 2026-02-20)
 - [ ] **Phase 4: Extended Formats & Domain Intelligence** - Word/spreadsheet support and real estate-specific data extraction
 
 ## Phase Details
@@ -54,8 +54,8 @@ Plans:
   2. Bot sends the generated PDF file back to the user in the Telegram chat as a document attachment
 **Plans:** 2 plans
 Plans:
-- [ ] 03-01-PLAN.md — PDF generation service with PDFKit (markdown-to-PDF renderer)
-- [ ] 03-02-PLAN.md — Wire PDF generation into document handlers, send via Telegram
+- [x] 03-01-PLAN.md — PDF generation service with PDFKit (markdown-to-PDF renderer)
+- [x] 03-02-PLAN.md — Wire PDF generation into document handlers, send via Telegram
 
 ### Phase 4: Extended Formats & Domain Intelligence
 **Goal**: User can summarize Word docs and spreadsheets, and all summaries extract real estate-specific data
@@ -76,5 +76,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
 | 2. Core Summarization Pipeline | 0/? | Complete    | 2026-02-20 |
-| 3. PDF Output & Delivery | 1/2 | In Progress | - |
+| 3. PDF Output & Delivery | 2/2 | Complete | 2026-02-20 |
 | 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |

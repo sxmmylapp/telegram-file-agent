@@ -37,7 +37,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Output & Delivery
 
 - [ ] **OUT-01**: Bot generates professional executive summary PDF via PDFKit
-- [ ] **OUT-02**: Bot sends generated PDF back to user in Telegram chat
+- [x] **OUT-02**: Bot sends generated PDF back to user in Telegram chat
 
 ## v2 Requirements
 
@@ -100,7 +100,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SUMM-03 | Phase 4 | Pending |
 | SUMM-04 | Phase 2 | Pending |
 | OUT-01 | Phase 3 | Pending |
-| OUT-02 | Phase 3 | Pending |
+| OUT-02 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 17 total
