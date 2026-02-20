@@ -13,7 +13,7 @@ This roadmap delivers a Telegram bot that receives real estate documents, summar
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Bot Foundation & Document Reception** - Working Telegram bot that receives documents, validates them, and confirms receipt
-- [ ] **Phase 2: Core Summarization Pipeline** - PDF and image documents summarized via Claude with cost tracking
+- [x] **Phase 2: Core Summarization Pipeline** - PDF and image documents summarized via Claude with cost tracking (completed 2026-02-20)
 - [ ] **Phase 3: PDF Output & Delivery** - Professional executive summary PDFs generated and sent via Telegram
 - [ ] **Phase 4: Extended Formats & Domain Intelligence** - Word/spreadsheet support and real estate-specific data extraction
 
@@ -72,6 +72,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Bot Foundation & Document Reception | 0/2 | Planned | - |
-| 2. Core Summarization Pipeline | 0/? | Not started | - |
+| 2. Core Summarization Pipeline | 0/? | Complete    | 2026-02-20 |
 | 3. PDF Output & Delivery | 0/? | Not started | - |
 | 4. Extended Formats & Domain Intelligence | 0/? | Not started | - |
