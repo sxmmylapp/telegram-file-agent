@@ -18,8 +18,10 @@
     "@grammyjs/files": "^1.2.0",
     "dotenv": "^17.3.1",
     "grammy": "^1.40.0",
+    "mammoth": "^1.11.0",
     "pdfkit": "^0.17.2",
-    "pino": "^10.3.1"
+    "pino": "^10.3.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   },
   "devDependencies": {
     "@types/node": "^25.3.0",
