@@ -15,4 +15,17 @@ if [ -f .env ]; then
   set +a
 fi
 
-exec /usr/local/bin/node dist/bot.js
+# Find node — check common locations
+NODE_BIN=$(command -v node 2>/dev/null || echo "")
+if [ -z "$NODE_BIN" ]; then
+  for p in /usr/local/bin/node /opt/homebrew/bin/node "$HOME/.nvm/versions/node"/*/bin/node; do
+    if [ -x "$p" ]; then NODE_BIN="$p"; break; fi
+  done
+fi
+
+if [ -z "$NODE_BIN" ]; then
+  echo "ERROR: node not found" >&2
+  exit 1
+fi
+
+exec "$NODE_BIN" dist/bot.js

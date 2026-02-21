@@ -8,8 +8,8 @@
     "build": "node esbuild.config.mjs",
     "start": "node dist/bot.js",
     "typecheck": "tsc --noEmit",
-    "install-service": "npm run build && mkdir -p ~/Library/Logs/telegram-file-agent && cp com.lapp.telegram-file-agent.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.lapp.telegram-file-agent.plist",
-    "uninstall-service": "launchctl unload ~/Library/LaunchAgents/com.lapp.telegram-file-agent.plist 2>/dev/null; rm -f ~/Library/LaunchAgents/com.lapp.telegram-file-agent.plist",
+    "install-service": "bash scripts/install.sh",
+    "uninstall-service": "bash scripts/uninstall.sh",
     "logs": "tail -f ~/Library/Logs/telegram-file-agent/stdout.log ~/Library/Logs/telegram-file-agent/stderr.log"
   },
   "keywords": [],
