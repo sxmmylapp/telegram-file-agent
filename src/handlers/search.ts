@@ -42,12 +42,12 @@ searchHandlers.command("search", async (ctx) => {
   }
 
   ctx.logger?.info({ query }, "Search command received");
-  await ctx.reply(`Searching iCloud Drive for "${query}"...`);
+  await ctx.reply(`Searching your files for "${query}"...`);
   await ctx.replyWithChatAction("typing");
 
   try {
     const results = await searchFiles(
-      config.ICLOUD_DRIVE_PATH,
+      config.SEARCH_PATHS,
       query,
       ctx.logger!
     );
@@ -57,7 +57,7 @@ searchHandlers.command("search", async (ctx) => {
         `No matching files found for "${query}".\n\n` +
           "Tips:\n" +
           "- Try fewer or different keywords\n" +
-          "- Check that the files are downloaded from iCloud (not just placeholders)"
+          "- Files in iCloud must be downloaded locally (not just placeholders)"
       );
       return;
     }

@@ -23,6 +23,24 @@ function parseAuthorizedUserIds(raw: string): number[] {
   return ids;
 }
 
+const DEFAULT_SEARCH_PATHS = [
+  `${process.env.HOME}/Library/Mobile Documents/com~apple~CloudDocs`,
+  `${process.env.HOME}/Desktop`,
+  `${process.env.HOME}/Documents`,
+  `${process.env.HOME}/Downloads`,
+];
+
+function parseSearchPaths(): string[] {
+  if (process.env.SEARCH_PATHS) {
+    return process.env.SEARCH_PATHS.split(",").map((p) => p.trim()).filter(Boolean);
+  }
+  // Fallback: use ICLOUD_DRIVE_PATH if set (backwards compat), otherwise defaults
+  if (process.env.ICLOUD_DRIVE_PATH) {
+    return [process.env.ICLOUD_DRIVE_PATH];
+  }
+  return DEFAULT_SEARCH_PATHS;
+}
+
 export const config = {
   BOT_TOKEN: requireEnv("BOT_TOKEN"),
   AUTHORIZED_USER_IDS: parseAuthorizedUserIds(
@@ -32,6 +50,7 @@ export const config = {
   LOG_LEVEL: process.env.LOG_LEVEL || "info",
   ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY"),
   CLAUDE_MODEL: process.env.CLAUDE_MODEL || "claude-sonnet-4-6",
+  SEARCH_PATHS: parseSearchPaths(),
   ICLOUD_DRIVE_PATH:
     process.env.ICLOUD_DRIVE_PATH ||
     `${process.env.HOME}/Library/Mobile Documents/com~apple~CloudDocs`,

@@ -30,31 +30,51 @@ const SKIP_DIRS = new Set([
 ]);
 
 /**
- * Recursively search iCloud Drive for files matching the query.
+ * Recursively search multiple root paths for files matching the query.
  * Matches against file names (case-insensitive) and parent folder names.
+ * Searches all paths in parallel, merges and deduplicates results.
  */
 export async function searchFiles(
-  rootPath: string,
+  rootPaths: string | string[],
   query: string,
   logger: Logger,
   maxResults = 20
 ): Promise<SearchResult[]> {
-  const results: SearchResult[] = [];
+  const paths = Array.isArray(rootPaths) ? rootPaths : [rootPaths];
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
 
-  logger.info({ rootPath, query, terms }, "Starting iCloud Drive search");
+  logger.info({ rootPaths: paths, query, terms }, "Starting file search");
 
-  await walkDirectory(rootPath, terms, results, maxResults, logger);
-
-  // Sort by modification date (newest first)
-  results.sort((a, b) => b.modified.getTime() - a.modified.getTime());
-
-  logger.info(
-    { query, resultCount: results.length },
-    "iCloud Drive search complete"
+  // Search all paths in parallel
+  const perPathResults = await Promise.all(
+    paths.map(async (rootPath) => {
+      const results: SearchResult[] = [];
+      await walkDirectory(rootPath, terms, results, maxResults, logger);
+      return results;
+    })
   );
 
-  return results;
+  // Merge, deduplicate by path, sort by modification date (newest first)
+  const seen = new Set<string>();
+  const merged: SearchResult[] = [];
+  for (const results of perPathResults) {
+    for (const r of results) {
+      if (!seen.has(r.path)) {
+        seen.add(r.path);
+        merged.push(r);
+      }
+    }
+  }
+
+  merged.sort((a, b) => b.modified.getTime() - a.modified.getTime());
+  const final = merged.slice(0, maxResults);
+
+  logger.info(
+    { query, resultCount: final.length, pathsSearched: paths.length },
+    "File search complete"
+  );
+
+  return final;
 }
 
 async function walkDirectory(
