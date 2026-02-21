@@ -19,12 +19,14 @@ commandHandlers.command("help", async (ctx) => {
   ctx.logger?.info({ command: "/help" }, "Command received");
 
   await ctx.reply(
-    "Available commands:\n\n" +
-      "/search <query> - Search iCloud Drive and summarize a file\n" +
-      "/start - Welcome message\n" +
-      "/help - Show this help text\n" +
-      "/status - Bot status and uptime\n\n" +
-      "You can also send me a file directly (PDF, image, Word, spreadsheet)."
+    "How to use this bot:\n\n" +
+      "1. /search <keywords> — finds files on your Mac (Desktop, Documents, Downloads, iCloud Drive)\n" +
+      "   Example: /search oak ave contract\n\n" +
+      "2. Tap any search result to get an AI summary + a PDF of the summary\n\n" +
+      "3. Or send a file directly (PDF, image, Word doc, spreadsheet) and I'll summarize it on the spot\n\n" +
+      "Other commands:\n" +
+      "/status — check if the bot is running\n" +
+      "/help — show this message"
   );
 });
 
