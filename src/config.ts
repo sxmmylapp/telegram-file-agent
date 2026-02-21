@@ -32,4 +32,7 @@ export const config = {
   LOG_LEVEL: process.env.LOG_LEVEL || "info",
   ANTHROPIC_API_KEY: requireEnv("ANTHROPIC_API_KEY"),
   CLAUDE_MODEL: process.env.CLAUDE_MODEL || "claude-sonnet-4-6",
+  ICLOUD_DRIVE_PATH:
+    process.env.ICLOUD_DRIVE_PATH ||
+    `${process.env.HOME}/Library/Mobile Documents/com~apple~CloudDocs`,
 } as const;

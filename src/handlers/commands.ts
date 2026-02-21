@@ -10,7 +10,7 @@ commandHandlers.command("start", async (ctx) => {
 
   await ctx.reply(
     "Welcome! I'm your real estate document assistant.\n\n" +
-      "Send me a PDF or image and I'll help you process it.\n\n" +
+      "Use /search to find and summarize files from iCloud Drive, or send me a file directly.\n\n" +
       "Use /help to see available commands."
   );
 });
@@ -20,10 +20,11 @@ commandHandlers.command("help", async (ctx) => {
 
   await ctx.reply(
     "Available commands:\n\n" +
+      "/search <query> - Search iCloud Drive and summarize a file\n" +
       "/start - Welcome message\n" +
       "/help - Show this help text\n" +
       "/status - Bot status and uptime\n\n" +
-      "To process a document, simply send me a PDF, image, or photo."
+      "You can also send me a file directly (PDF, image, Word, spreadsheet)."
   );
 });
 

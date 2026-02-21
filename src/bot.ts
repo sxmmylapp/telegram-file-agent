@@ -7,6 +7,7 @@ import { createLogger } from "./logger.js";
 import { createAuthMiddleware } from "./middleware/auth.js";
 import { createLoggingMiddleware } from "./middleware/logging.js";
 import { commandHandlers } from "./handlers/commands.js";
+import { searchHandlers } from "./handlers/search.js";
 import { documentHandlers } from "./handlers/documents.js";
 import type { BotContext } from "./types.js";
 
@@ -46,8 +47,9 @@ bot.catch((err) => {
 // Register middleware in order
 bot.use(createLoggingMiddleware(logger));    // 1. Logging FIRST
 bot.use(createAuthMiddleware(config.AUTHORIZED_USER_IDS)); // 2. Auth SECOND
-bot.use(commandHandlers);                    // 3. Commands
-bot.use(documentHandlers);                   // 4. Documents
+bot.use(searchHandlers);                     // 3. Search (iCloud Drive)
+bot.use(commandHandlers);                    // 4. Commands
+bot.use(documentHandlers);                   // 5. Documents
 
 // Graceful shutdown
 process.once("SIGINT", () => {
