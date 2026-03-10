@@ -1,21 +1,46 @@
 #!/bin/bash
 # One-liner setup for Telegram File Agent on a fresh Mac.
-# Usage: curl -fsSL https://raw.githubusercontent.com/sxmmylapp/telegram-file-agent/main/scripts/setup-remote.sh | \
-#   BOT_TOKEN="xxx" ANTHROPIC_API_KEY="yyy" TELEGRAM_USER_ID="zzz" bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/sxmmylapp/telegram-file-agent/main/scripts/setup-remote.sh | bash
+#
+# The script will prompt for credentials interactively.
+# You can also pre-set them as env vars to skip prompts:
+#   BOT_TOKEN="xxx" ANTHROPIC_API_KEY="yyy" TELEGRAM_USER_ID="zzz" curl ... | bash
 set -euo pipefail
 
-# ── Step 0: Validate env vars ────────────────────────────────────────────────
-echo "==> Step 0: Validating configuration..."
-missing=""
-[ -z "${BOT_TOKEN:-}" ] && missing="$missing BOT_TOKEN"
-[ -z "${ANTHROPIC_API_KEY:-}" ] && missing="$missing ANTHROPIC_API_KEY"
-[ -z "${TELEGRAM_USER_ID:-}" ] && missing="$missing TELEGRAM_USER_ID"
-if [ -n "$missing" ]; then
-  echo "ERROR: Missing required env vars:$missing"
-  echo "Usage: curl -fsSL <url> | BOT_TOKEN=xxx ANTHROPIC_API_KEY=yyy TELEGRAM_USER_ID=zzz bash"
-  exit 1
-fi
-echo "    All required variables set."
+# ── Step 0: Collect credentials ──────────────────────────────────────────────
+echo ""
+echo "============================================"
+echo "  Telegram File Agent — Setup"
+echo "============================================"
+echo ""
+echo "  You'll need 3 things:"
+echo "    1. A Telegram Bot Token (from @BotFather)"
+echo "    2. An Anthropic API Key (from console.anthropic.com)"
+echo "    3. Your Telegram User ID (from @userinfobot)"
+echo ""
+
+# Read from /dev/tty so this works with curl | bash
+prompt() {
+  local var_name="$1" prompt_text="$2" current_val="${3:-}"
+  if [ -n "$current_val" ]; then
+    echo "    $prompt_text: (using pre-set value)"
+  else
+    printf "    $prompt_text: " >&2
+    read -r current_val < /dev/tty
+    if [ -z "$current_val" ]; then
+      echo "ERROR: $var_name is required." >&2
+      exit 1
+    fi
+  fi
+  echo "$current_val"
+}
+
+BOT_TOKEN=$(prompt "BOT_TOKEN" "Telegram Bot Token" "${BOT_TOKEN:-}")
+ANTHROPIC_API_KEY=$(prompt "ANTHROPIC_API_KEY" "Anthropic API Key" "${ANTHROPIC_API_KEY:-}")
+TELEGRAM_USER_ID=$(prompt "TELEGRAM_USER_ID" "Your Telegram User ID" "${TELEGRAM_USER_ID:-}")
+
+echo ""
+echo "    All credentials collected."
 
 # ── Step 1: Detect architecture ──────────────────────────────────────────────
 echo "==> Step 1: Detecting architecture..."
