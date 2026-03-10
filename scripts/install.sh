@@ -50,8 +50,10 @@ cat > "$PLIST_PATH" <<PLIST
 
     <key>EnvironmentVariables</key>
     <dict>
+        <key>HOME</key>
+        <string>$HOME</string>
         <key>PATH</key>
-        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
         <key>NODE_ENV</key>
         <string>production</string>
     </dict>

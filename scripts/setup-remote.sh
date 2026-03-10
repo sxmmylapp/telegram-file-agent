@@ -102,6 +102,7 @@ echo "==> Step 5: Setting up repository..."
 if [ -d "$INSTALL_DIR/.git" ]; then
   echo "    Repo exists, pulling latest..."
   cd "$INSTALL_DIR"
+  git reset --hard origin/main 2>/dev/null || true
   git pull origin main
 else
   echo "    Cloning repository..."
@@ -132,11 +133,10 @@ bash "$INSTALL_DIR/scripts/install.sh"
 
 # ── Step 9: Verify ───────────────────────────────────────────────────────────
 echo "==> Step 9: Verifying installation..."
-sleep 3
-LABEL="com.lapp.telegram-file-agent"
+sleep 5
 LOG_DIR="$HOME/Library/Logs/telegram-file-agent"
 
-if launchctl list | grep -q "$LABEL"; then
+if launchctl list | grep -q "com.lapp.telegram-file-agent"; then
   echo "    Service is running!"
 else
   echo "    WARNING: Service may not have started. Check: tail -f $LOG_DIR/stderr.log"
@@ -162,11 +162,11 @@ echo "    3. Send any document to get a summary"
 echo "    4. Use /search <query> to search your files"
 echo ""
 echo "  Useful commands:"
-echo "    View logs:    tail -f $LOG_DIR/stdout.log"
-echo "    View errors:  tail -f $LOG_DIR/stderr.log"
-echo "    Update bot:   bash $INSTALL_DIR/scripts/update.sh"
-echo "    Stop bot:     launchctl unload ~/Library/LaunchAgents/$LABEL.plist"
-echo "    Start bot:    launchctl load ~/Library/LaunchAgents/$LABEL.plist"
+echo "    View logs:    tail -f ~/Library/Logs/telegram-file-agent/stdout.log"
+echo "    View errors:  tail -f ~/Library/Logs/telegram-file-agent/stderr.log"
+echo "    Update bot:   bash ~/telegram-file-agent/scripts/update.sh"
+echo "    Stop bot:     launchctl unload ~/Library/LaunchAgents/com.lapp.telegram-file-agent.plist"
+echo "    Start bot:    launchctl load ~/Library/LaunchAgents/com.lapp.telegram-file-agent.plist"
 echo ""
 echo "  IMPORTANT: If /search returns no results for files you know exist,"
 echo "  grant Full Disk Access to Terminal:"
